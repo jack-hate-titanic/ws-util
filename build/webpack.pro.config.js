@@ -1,3 +1,10 @@
+/*
+ * @Author: ws
+ * @Date: 2021-09-05 09:47:35
+ * @LastEditors: ws
+ * @LastEditTime: 2021-09-05 18:11:19
+ * @Description:
+ */
 const path = require("path");
 const webpack = require("webpack");
 const { name } = require("../package.json");
@@ -10,7 +17,7 @@ module.exports = {
   output: {
     filename: `${name}.min.js`,
     path: path.resolve(rootPath, "dist"),
-    library: "ws-util",
+    library: name,
     // 打包生成库可以通过esm/commonjs/reqire的语法引入
     libraryTarget: "umd",
   },

@@ -2,9 +2,9 @@
   "name": "ws-util",
   "version": "0.0.1",
   "description": "常用工具库",
-  "main": "dist/ws-util.min.js",
+  "main": "dist/ws-util.min.js", 
   "scripts": {
-    "dev": "webpack --watch --config ./build/webpack.base.config.js",
+    "dev": "webpack --config ./build/webpack.dev.config.js",
     "build": "webpack --config ./build/webpack.pro.config.js"
   },
   "author": "wsondq",

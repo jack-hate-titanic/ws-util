@@ -1,3 +1,10 @@
+/*
+ * @Author: ws
+ * @Date: 2021-09-05 11:13:09
+ * @LastEditors: ws
+ * @LastEditTime: 2021-09-05 18:10:53
+ * @Description:
+ */
 const path = require("path");
 
 module.exports = {
@@ -6,9 +13,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "../dist"),
     filename: "ws-util.js",
-    library: "ws-util",
-    // 打包生成库可以通过esm/commonjs/reqire的语法引入
-    libraryTarget: "umd",
   },
   module: {
     rules: [
