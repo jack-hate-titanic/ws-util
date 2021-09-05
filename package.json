@@ -1,0 +1,25 @@
+{
+  "name": "ws-util",
+  "version": "0.0.1",
+  "description": "常用工具库",
+  "main": "dist/ws-util.min.js",
+  "scripts": {
+    "dev": "webpack --watch --config ./build/webpack.base.config.js",
+    "build": "webpack --config ./build/webpack.pro.config.js"
+  },
+  "author": "wsondq",
+  "keywords": [
+    "utils",
+    "tools",
+    "ws-util",
+    "localStorage"
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.4",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.52.0",
+    "webpack-cli": "^4.8.0"
+  }
+}
