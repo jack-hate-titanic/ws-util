@@ -2,7 +2,7 @@
  * @Author: ws
  * @Date: 2021-10-04 19:31:27
  * @LastEditors: ws
- * @LastEditTime: 2021-10-04 20:30:18
+ * @LastEditTime: 2021-10-05 19:37:16
  * @Description:
  *1.Promise是一个类 我们可以new Promise 创造一个实例
  2.promise 有三个状态 1.默认状态叫等待态 pending 2.resolve表示成功态 fulfilled 3.reject表示变成失败态 rejected
@@ -13,6 +13,13 @@
 const PENDING = "PENDING";
 const SUCCESS = "SUCCESS";
 const FAIL = "FAIL";
+
+const resolvePromise = (x, promise, resolve, reject) => {
+  if (x == promise) {
+    reject(new TypeError("错误，循环引用"));
+  }
+};
+
 class Promise {
   constructor(execute) {
     this.status = PENDING;
@@ -34,38 +41,67 @@ class Promise {
         this.failCallBackArr.forEach((fn) => fn());
       }
     };
-    execute(resolve, reject);
+    try {
+      execute(resolve, reject);
+    } catch (error) {
+      reject(error);
+    }
   }
 
   then(onSuccess, onFail) {
-    if (this.status === SUCCESS) {
-      onSuccess(this.value);
-    }
-    if (this.status === FAIL) {
-      onFail(this.reason);
-    }
-    if (this.status === PENDING) {
-      this.successCallBackArr.push(() => {
-        onSuccess(this.value);
-      });
-      this.failCallBackArr.push(() => {
-        onFail(this.reason);
-      });
-    }
+    const promise = new Promise((resolve, reject) => {
+      if (this.status === SUCCESS) {
+        try {
+          const x = onSuccess(this.value);
+          resolve(x);
+        } catch (e) {
+          reject(e);
+        }
+      }
+      if (this.status === FAIL) {
+        try {
+          const x = onFail(this.error);
+          resolve(x);
+        } catch (e) {
+          reject(e);
+        }
+      }
+      if (this.status === PENDING) {
+        this.successCallBackArr.push(() => {
+          try {
+            const x = onSuccess(this.value);
+            resolve(x);
+          } catch (e) {
+            reject(e);
+          }
+        });
+        this.failCallBackArr.push(() => {
+          try {
+            const x = onFail(this.reason);
+            resolve(x);
+          } catch (e) {
+            reject(e);
+          }
+        });
+      }
+    });
+    return promise;
   }
 }
 
 let pro = new Promise((resolve) => {
-  setTimeout(() => {
-    resolve(10);
-  }, 2000);
+  throw "错误";
 });
 
-pro.then(
-  (value) => {
+pro
+  .then(
+    (value) => {
+      return value + 3;
+    },
+    (reason) => {
+      console.log(reason);
+    }
+  )
+  .then((value) => {
     console.log(value);
-  },
-  (reason) => {
-    console.log(reason);
-  }
-);
+  });
