@@ -2,7 +2,7 @@
  * @Author: ws
  * @Date: 2021-10-12 22:51:20
  * @LastEditors: ws
- * @LastEditTime: 2021-10-12 23:16:08
+ * @LastEditTime: 2021-12-13 22:19:56
  * @Description:
  */
 
@@ -10,9 +10,9 @@
 // 2.考虑context为null的时候
 
 Function.prototype.myBind = function (context) {
-  const params = [...arguments].slice(1);
-  return function () {
-    this.apply(context || window, params);
+  const outArgs = [...arguments].slice(1);
+  return function (...innerArgs) {
+    this.apply(context || window, [...outArgs, ...innerArgs]);
   };
 };
 
