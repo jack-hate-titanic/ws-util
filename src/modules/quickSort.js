@@ -2,7 +2,7 @@
  * @Author: ws
  * @Date: 2022-03-03 22:56:09
  * @LastEditors: ws
- * @LastEditTime: 2022-03-03 23:08:36
+ * @LastEditTime: 2022-04-25 23:24:33
  * @Description: 
  */
 
@@ -28,6 +28,7 @@ const quickSort = function (nums) {
   }
   let arr1 = quickSort(left);
   let arr2 = quickSort(right);
+  console.log(left,right);
   return arr1.concat([point], arr2);
 
 }
