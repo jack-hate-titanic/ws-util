@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="increment">我是周杰伦，我在油管新发布了一首歌</button>
+  <div>我是粉丝小王，油管通知我，我现在只能看到周杰伦的<span id="state">0</span>首歌</div>
+  <button id="decrement">我是周杰伦，我在油管删除了一首歌</button>
+</body>
+<script src="../modules/redux.js"></script>
+<script>
+  function reducer(state, action) {
+        switch (action.type) {
+            case "increment":
+                return state + 1;
+            case "decrement":
+                return state - 1;
+            default:
+                return state;
+        }
+  }
+  const store = createStore(reducer, 0);
+  const state = document.getElementById("state");
+  const incrementBtn = document.getElementById("increment");
+  const decrementBtn = document.getElementById("decrement");
+  incrementBtn.onclick = function () {
+    store.dispatch({ type: "increment" });
+  };
+  decrementBtn.onclick = function () {
+    store.dispatch({ type: "decrement" });
+  };
+  store.subscribe(function () {
+      state.innerHTML = store.getState();
+  });
+</script>
+</html>
