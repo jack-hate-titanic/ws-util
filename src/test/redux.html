@@ -13,7 +13,8 @@
 </body>
 <script src="../modules/redux.js"></script>
 <script>
-  function reducer(state, action) {
+  const initState = 0;
+  function reducer(state = initState, action) {
         switch (action.type) {
             case "increment":
                 return state + 1;
@@ -23,7 +24,32 @@
                 return state;
         }
   }
-  const store = createStore(reducer, 0);
+
+  function logger(store) {
+    return function(next) {
+      return function(action) {
+        console.group(action.type);
+        console.info('dispatching', action);
+        let result = next(action);
+        console.log('next state', store.getState());
+        console.groupEnd();
+        return result
+      }
+    }
+  }
+
+  function logger2(store) {
+    return function(next) {
+      return function(action) {
+        let result = next(action);
+        console.log('logger2');
+        return result
+      }
+    }
+  }
+
+
+  const store = createStore(reducer, applyMiddleware(logger, logger2));
   const state = document.getElementById("state");
   const incrementBtn = document.getElementById("increment");
   const decrementBtn = document.getElementById("decrement");
